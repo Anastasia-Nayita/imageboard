@@ -4,7 +4,20 @@
     <title></title>
 </head>
 <body>
+    <h1>Testing Vue</h1>
+    <main>
+
+      
+    <div v-if="images.length > 0">
+            <div v-for="image in images">
+                <img :src="image.url">
+                <p> {{image.title}}</p>
+            </div>
+        </div>
+        <div v-else>nothing to show atm</div>
+    </main>
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>
+    <script src="/js/script.js"></script>
 </body>
 </html>
