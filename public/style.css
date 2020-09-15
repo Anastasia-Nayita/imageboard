@@ -1,0 +1,17 @@
+* {
+    margin: 0;
+}
+
+#imageBlock {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    /* grid-template-rows: 1fr 1fr 1fr;
+    gap: 1px 1px; */
+}
+#card {
+    position: relative;
+}
+img {
+    width: 400px;
+    margin: 10%;
+}
