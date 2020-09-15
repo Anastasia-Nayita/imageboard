@@ -4,7 +4,8 @@ const db = require("./db");
 const multer = require("multer");
 const uidSafe = require("uid-safe");
 const path = require("path");
-
+const s3 = require("./s3");
+const { s3Url } = require("./config");
 app.use(express.static("public"));
 
 const diskStorage = multer.diskStorage({
@@ -40,7 +41,20 @@ app.get("/images", (req, res) => {
         });
 });
 
-app.post("/upload", uploader.single("file"), (req, res) => {
+app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
+    const filename = req.file.filename;
+    const url = `${s3Url}${filename}`;
+    db.addImage(url, req.body.title, req.body.desc, req.body.username).then(
+        {{rows}} => {
+            res.json({
+                image: rows(0)
+            })
+        }
+    )
+
+
+
+
     console.log("file", req.file);
     console.log("input", req.body);
 
