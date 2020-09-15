@@ -1,5 +1,5 @@
 const aws = require("aws-sdk");
-const fs = requore("fs");
+const fs = require("fs");
 
 let secrets;
 if (process.env.NODE_ENV == "production") {
@@ -23,7 +23,7 @@ exports.upload = (req, res, next) => {
 
     const promise = s3
         .putObject({
-            Bucket: "spicedling", ///name of the bucket
+            Bucket: "touch-of-spice", ///name of the bucket
             ACL: "public-read",
             Key: filename,
             Body: fs.createReadStream(path),

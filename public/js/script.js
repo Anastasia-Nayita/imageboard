@@ -20,13 +20,16 @@
                 .then(function (resp) {
                     //console.log("resp.data: ", resp.data);
                     that.images = resp.data.images;
-
-                    // console.log("resp.data: ", resp.data.images);
+                    // resp.data.images.unshift()
+                    //console.log("resp.data: ", resp.data);
+                    //console.log("resp.data.images: ", resp.data.images);
                 })
                 .catch(function (err) {
                     console.log("err in get/images:", err);
                 });
         },
+        ////console.log("that.images: ", that.images),
+
         methods: {
             handleClick: function (e) {
                 e.preventDefault();
@@ -37,11 +40,15 @@
                 formData.append("description", this.description);
                 formData.append("username", this.username);
                 formData.append("file", this.file);
+                console.log("!!!formData: ", formData);
 
                 axios
                     .post("/upload", formData)
                     .then(function (resp) {
                         console.log("resp in post/upload", resp);
+                        console.log("!!!formData: ", formData);
+                      //  resp.data.images.unshift(formData);
+                        ///push image in arr of data
                     })
                     .catch(function (err) {
                         console.log("err in post'upload", err);

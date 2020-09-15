@@ -27,7 +27,7 @@ const uploader = multer({
 });
 
 app.get("/images", (req, res) => {
-    //console.log("something in the get");
+    console.log("something in the get");
     db.getImages()
         .then((result) => {
             console.log("result.rows ", result.rows);
@@ -44,16 +44,13 @@ app.get("/images", (req, res) => {
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     const filename = req.file.filename;
     const url = `${s3Url}${filename}`;
-    db.addImage(url, req.body.title, req.body.desc, req.body.username).then(
-        {{rows}} => {
+    db.addImage(url, req.body.username, req.body.title, req.body.desc).then(
+        ({ rows }) => {
             res.json({
-                image: rows(0)
-            })
-        }
-    )
-
-
-
+                image: rows[0],
+            });
+        } //// unshift  to arr to appearsd obj in begignig of an array
+    );
 
     console.log("file", req.file);
     console.log("input", req.body);
