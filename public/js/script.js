@@ -1,25 +1,63 @@
 (function () {
     ////no let no const no arr functions
     ///only promises
+
+    Vue.component("first-component", {
+        template: "#first-component",
+        props: ["imageId"],
+        data: function () {
+            return {
+                heading: "somekind of heading",
+                imageData: [], /////// ?????
+            };
+        },
+        mounted: function () {
+            // console.log("This id of the component", this.imageId);
+            ///axios to make a req to get data
+            // console.log("this in mounted component", this);
+            var thatImg = this;
+            //console.log("thatImg: ", thatImg);
+
+            axios
+                .get("/images/" + this.imageId)
+                .then(function (resp) {
+                    thatImg.imageData = resp.data.image;
+
+                    //console.log("thatImg after adding data", thatImg);
+                    // console.log("thatImg.title: ", thatImg.title);
+                })
+                .catch(function (err) {
+                    console.log("err in mounted component", err);
+                });
+        },
+        methods: {
+            handleClick: function () {
+                this.heading = "heading was clicked";
+                ///  this.title = thatImg.title;  ?????
+            },
+        },
+    });
+
     new Vue({
         el: "main",
         data: {
             heading: "vue heading",
-            // cuteAnimals: [],
             images: [],
+            imageId: null,
             title: "",
             description: "",
             username: "",
             file: null,
+            showModal: false,
         },
 
         mounted: function () {
-            var that = this;
+            var thatImg = this;
             axios
                 .get("/images")
                 .then(function (resp) {
                     //console.log("resp.data: ", resp.data);
-                    that.images = resp.data.images;
+                    thatImg.images = resp.data.images;
                     // resp.data.images.unshift()
                     //console.log("resp.data: ", resp.data);
                     //console.log("resp.data.images: ", resp.data.images);
@@ -33,22 +71,29 @@
         methods: {
             handleClick: function (e) {
                 e.preventDefault();
-                // console.log("this: ", this);
+
                 var formData = new FormData();
 
                 formData.append("title", this.title);
                 formData.append("description", this.description);
                 formData.append("username", this.username);
                 formData.append("file", this.file);
-                console.log("!!!formData: ", formData);
+                //console.log("!!!formData: ", formData);
 
+                //console.log("this: ", this);
+                var thatImg = this;
                 axios
                     .post("/upload", formData)
                     .then(function (resp) {
-                        console.log("resp in post/upload", resp);
-                        console.log("!!!formData: ", formData);
-                      //  resp.data.images.unshift(formData);
+                        //console.log("resp in post/upload", resp);
+                        //  resp.data.images.unshift(formData) ???;
                         ///push image in arr of data
+                        //console.log("thatImg: ", thatImg);
+                        //console.log("resp.data: ", resp.data);
+
+                        thatImg.images.unshift(resp.data.image);
+
+                        //console.log("thatImg.images: ", thatImg.images);
                     })
                     .catch(function (err) {
                         console.log("err in post'upload", err);
@@ -58,6 +103,11 @@
                 //console.log("handleChange is firering");
                 // console.log("file", e.target.files[0]);
                 this.file = e.target.files[0];
+            },
+            clickComponent: function (id) {
+                this.showModal = true;
+                this.imageId = id;
+                //console.log("clicked happen");
             },
         },
     });
