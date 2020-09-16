@@ -9,6 +9,9 @@
             return {
                 heading: "somekind of heading",
                 imageData: [],
+                comment: "",
+                username: "",
+                comments: [],
             };
         },
         mounted: function () {
@@ -29,11 +32,44 @@
                 .catch(function (err) {
                     console.log("err in mounted component", err);
                 });
+            axios
+                .get("/images/" + this.imageId + "/comment")
+                .then(function (resp) {
+                    thatImg.comments = resp.data.image;
+                    console.log("resp.data: ", resp.data);
+                    //console.log("thatImg after adding data", thatImg);
+                    // console.log("thatImg.title: ", thatImg.title);
+                })
+                .catch(function (err) {
+                    console.log("err in mounted component", err);
+                });
         },
+
         methods: {
             handleClick: function () {
                 this.heading = "heading was clicked";
                 ///  this.title = thatImg.title;  ?????
+            },
+            submitComment: function (e) {
+                e.preventDefault();
+                var thatCom = this;
+
+                var comData = {
+                    comment: thatCom.comment,
+                    username: thatCom.username,
+                    id: thatCom.imageId,
+                };
+                console.log("comData", comData);
+
+                axios
+                    .post("/comment", comData)
+                    .then(function (resp) {
+                        //console.log(resp.data);
+                        thatCom.comments.unshift(resp.data.comment);
+                    })
+                    .catch(function (err) {
+                        console.log("err in post'comment", err);
+                    });
             },
         },
     });

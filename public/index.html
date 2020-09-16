@@ -31,25 +31,24 @@
     
     <script id="first-component" type="text/x-template">
             <!-- everything in componnent must be wraped in one element -->
-           <div>
-                <span @click="handleClick"> 
-                    <button>close X</button>
-                    <div style="background-color: cornsilk">
+        <div>
+            <span @click="handleClick">
+                <button>close X</button>
                     <img :src="imageData.url" alt=""> 
-                    <div id='image-info'>
-                    {{ heading }} {{imageData.username}} {{imageData.title}} 
-                  {{imageData.description}} 
-                  <input v-model='comment'  type="text" name="comment">
-                  <input v-model='username' type="text" name="username">
-                  <button type="submit">submit</button>
-                    </div>
-                    
-                    
-                </div>
-                </span>
-              
-            </div>
-        </script>
+                        <div id='image-info'>
+                            {{ heading }} {{imageData.username}} {{imageData.title}} 
+                            {{imageData.description}} 
+                            <input v-model='comment' placeholder="comment" type="text" name="comment">
+                            <input v-model='username' placeholder="username" type="text" name="username">
+                            <button @click='submitComment'>submit</button>
+                            <div id="comBlock"v-if="comments.length > 0"> 
+                                <div id="comCard" v-for="comment in comments"'>  
+                                    <p> {{comments.username}} : {{comments.comment}} </p>
+                                </div>
+                        </div>     
+            </span>
+       </div>        
+    </script>
 
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>

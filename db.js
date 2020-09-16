@@ -31,3 +31,10 @@ module.exports.addComment = (username, comment, image_id) => {
         [username, comment, image_id]
     );
 };
+module.exports.getComment = (image_id) => {
+    return db.query(
+        `SELECT * FROM comments  
+        WHERE image_id = ($1)`,
+        [image_id]
+    );
+};

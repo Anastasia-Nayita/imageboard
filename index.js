@@ -69,8 +69,33 @@ app.get("/images/:id", (req, res) => {
     });
 });
 
-app.post("/comments", (req, res) => {
-    console.log("this worked");
+app.get("/images/:id/comment", (req, res) => {
+    // console.log("something in the get imageId");
+    // console.log("req.params: ", req.params);
+    db.getComment(req.params.id).then((results) => {
+        var comments = results.rows;
+        res.json({
+            comments,
+            success: true,
+        });
+    });
+});
+
+app.post("/comment", (req, res) => {
+    var comment = req.body.comment;
+    var username = req.body.username;
+    var id = req.body.id;
+    console.log("req.params", req.body);
+    db.addComment(username, comment, id).then(({ rows }) => {
+        console.log("this worked");
+        console.log("req.body: ", req.body);
+        var comment = rows[0];
+
+        res.json({
+            comment,
+            success: true,
+        });
+    });
 });
 
 app.listen(8080, () => console.log("server is listenning..."));
