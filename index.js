@@ -69,4 +69,8 @@ app.get("/images/:id", (req, res) => {
     });
 });
 
+app.post("/comments", (req, res) => {
+    console.log("this worked");
+});
+
 app.listen(8080, () => console.log("server is listenning..."));

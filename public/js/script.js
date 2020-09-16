@@ -8,7 +8,7 @@
         data: function () {
             return {
                 heading: "somekind of heading",
-                imageData: [], /////// ?????
+                imageData: [],
             };
         },
         mounted: function () {
