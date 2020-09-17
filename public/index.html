@@ -30,7 +30,6 @@
     </main> 
     
     <script id="first-component" type="text/x-template">
-            <!-- everything in componnent must be wraped in one element -->
         <div>
             <span @click="handleClick">
                 <button>close X</button>
@@ -42,8 +41,8 @@
                             <input v-model='username' placeholder="username" type="text" name="username">
                             <button @click='submitComment'>submit</button>
                             <div id="comBlock"v-if="comments.length > 0"> 
-                                <div id="comCard" v-for="comment in comments"'>  
-                                    <p> {{comments.username}} : {{comments.comment}} </p>
+                                <div id="comCard" v-for="comment in comments">  
+                                    <p> {{comment.username}} | {{comment.comment}} </p>
                                 </div>
                         </div>     
             </span>

@@ -6,7 +6,7 @@
 #imageBlock {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    align-items: center;
+    /* justify-items: center; */
     gap: 5% 5%;
     padding: 0%;
     margin: 0%;
@@ -20,13 +20,14 @@
 #card {
     position: relative;
     border: grey solid;
-
+    padding: 5%;
     height: 100%;
+    justify-self: center;
 }
 
 #cardImg {
     max-width: 100%;
-    height: auto;
+    max-height: 20rem;
     object-fit: cover;
 }
 span {

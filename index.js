@@ -71,9 +71,12 @@ app.get("/images/:id", (req, res) => {
 
 app.get("/images/:id/comment", (req, res) => {
     // console.log("something in the get imageId");
-    // console.log("req.params: ", req.params);
+    //console.log("req.params in images/:id/comment :  ", req.params);
+    //console.log("req.params.id in images/:id/comment :  ", req.params.id);
+
     db.getComment(req.params.id).then((results) => {
         var comments = results.rows;
+        console.log("comments in images/:id/comment", comments);
         res.json({
             comments,
             success: true,
