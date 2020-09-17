@@ -21,7 +21,7 @@
     <div id="card" v-for="image in images" @click='clickComponent(image.id)'>  
         <img id="cardImg" :src="image.url">
                 <p> {{image.title}} {{image.id}} </p>
-        </div>
+    </div>
 </div>      
         <div v-else>nothing to show atm</div>
 
@@ -37,13 +37,17 @@
                         <div id='image-info'>
                             {{ heading }} {{imageData.username}} {{imageData.title}} 
                             {{imageData.description}} 
+                           
                             <input v-model='comment' placeholder="comment" type="text" name="comment">
                             <input v-model='username' placeholder="username" type="text" name="username">
                             <button @click='submitComment'>submit</button>
+                           
                             <div id="comBlock"v-if="comments.length > 0"> 
                                 <div id="comCard" v-for="comment in comments">  
-                                    <p> {{comment.username}} | {{comment.comment}} </p>
+                                    <p> {{comment.username}}: '{{comment.comment}}' </p>
                                 </div>
+                            </div>
+
                         </div>     
             </span>
        </div>        

@@ -28,7 +28,7 @@ const uploader = multer({
 });
 
 app.get("/images", (req, res) => {
-    console.log("something in the get");
+    //// console.log("something in the get");
     db.getImages()
         .then((result) => {
             //console.log("result.rows ", result.rows);
@@ -54,8 +54,8 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
         }
     );
 
-    console.log("file", req.file);
-    console.log("input", req.body);
+    // console.log("file", req.file);
+    // console.log("input", req.body);
 });
 
 app.get("/images/:id", (req, res) => {
@@ -76,7 +76,7 @@ app.get("/images/:id/comment", (req, res) => {
 
     db.getComment(req.params.id).then((results) => {
         var comments = results.rows;
-        console.log("comments in images/:id/comment", comments);
+        // console.log("comments in images/:id/comment", comments);
         res.json({
             comments,
             success: true,
@@ -88,10 +88,10 @@ app.post("/comment", (req, res) => {
     var comment = req.body.comment;
     var username = req.body.username;
     var id = req.body.id;
-    console.log("req.params", req.body);
+    ///console.log("req.params", req.body);
     db.addComment(username, comment, id).then(({ rows }) => {
-        console.log("this worked");
-        console.log("req.body: ", req.body);
+        /// console.log("this worked");
+        ///  console.log("req.body: ", req.body);
         var comment = rows[0];
 
         res.json({

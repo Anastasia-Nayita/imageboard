@@ -36,8 +36,8 @@
                 .get("/images/" + this.imageId + "/comment")
                 .then(function (resp) {
                     thatImg.comments = resp.data.comments;
-                    console.log("resp.data: ", resp.data);
-                    console.log("resp.data.comments: ", resp.data.comments);
+                    /// console.log("resp.data: ", resp.data);
+                    /// console.log("resp.data.comments: ", resp.data.comments);
                     //console.log("thatImg after adding data", thatImg);
                     // console.log("thatImg.title: ", thatImg.title);
                 })
@@ -60,13 +60,12 @@
                     username: thatCom.username,
                     id: thatCom.imageId,
                 };
-                console.log("comData", comData);
+                //console.log("comData", comData);
 
                 axios
                     .post("/comment", comData)
                     .then(function (resp) {
-                        //console.log(resp.data);
-                        thatCom.comments.unshift(resp.data.comments);
+                        thatCom.comments.unshift(resp.data.comment);
                     })
                     .catch(function (err) {
                         console.log("err in post'comment", err);
