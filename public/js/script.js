@@ -45,12 +45,47 @@
                     console.log("err in mounted component", err);
                 });
         },
+        watch: {
+            ///when imageid changes watcher is running
+            imageId: function () {
+                // console.log("something changed. IM WATCHING");
+                //same that in mounted think about how to make it clean and runs once
+                ///also check for jibra-jabra in url
 
+                var thatImg = this;
+                axios
+                    .get("/images/" + this.imageId)
+                    .then(function (resp) {
+                        thatImg.imageData = resp.data.image;
+                    })
+                    .catch(function (err) {
+                        console.log("err in mounted component", err);
+                    });
+                axios
+                    .get("/images/" + this.imageId + "/comment")
+                    .then(function (resp) {
+                        thatImg.comments = resp.data.comments;
+                    })
+                    .catch(function (err) {
+                        console.log("err in mounted component", err);
+                    });
+            },
+        },
         methods: {
             handleClick: function () {
-                this.heading = "heading was clicked";
+                //this.heading = "heading was clicked";
+
+                // console.log("location.hash: ", location.hash);
+                // console.log("handleClick is running in Vue Component");
+
+                location.hash = "";
+
+                ///when we close set url to empty string '' location.hash something
+                ///thatImg.imageId = location.hash.slice(1);
+
                 ///  this.title = thatImg.title;  ?????
             },
+
             submitComment: function (e) {
                 e.preventDefault();
                 var thatCom = this;
@@ -79,12 +114,12 @@
         data: {
             heading: "vue heading",
             images: [],
-            imageId: null,
+            imageId: location.hash.slice(1),
             title: "",
             description: "",
             username: "",
             file: null,
-            showModal: false,
+            // showModal: false,
         },
 
         mounted: function () {
@@ -101,6 +136,13 @@
                 .catch(function (err) {
                     console.log("err in get/images:", err);
                 });
+
+            window.addEventListener("hashchange", function () {
+                // console.log(location.hash);
+                thatImg.imageId = location.hash.slice(1);
+
+                ///when we close set url to empty string '' location.hash something
+            });
         },
         ////console.log("that.images: ", that.images),
 
@@ -141,9 +183,10 @@
                 this.file = e.target.files[0];
             },
             clickComponent: function (id) {
-                this.showModal = true;
-                this.imageId = id;
-                //console.log("clicked happen");
+                // this.showModal = true;
+                this.imageId = null;
+
+                console.log("clickedComponent is running");
             },
         },
     });

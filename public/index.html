@@ -18,26 +18,30 @@
         </form>
   
  <div id="imageBlock"v-if="images.length > 0"> 
-    <div id="card" v-for="image in images" @click='clickComponent(image.id)'>  
-        <img id="cardImg" :src="image.url">
-                <p> {{image.title}} {{image.id}} </p>
+    <div id="card" v-for="image in images" > 
+        <a :href=" '#' + image.id">
+        <div>
+            <img id="cardImg" :src="image.url">
+                <p> {{image.title}}  {{image.id}} </p>
+        </div>        
+           </a>      
     </div>
 </div>      
         <div v-else>nothing to show atm</div>
 
-        <first-component :image-id='imageId' v-if="showModal"></first-component> 
+        <first-component :image-id='imageId' v-if="imageId"></first-component> 
         
     </main> 
     
     <script id="first-component" type="text/x-template">
         <div>
-            <span @click="handleClick">
-                <button>close X</button>
+            <span>
+                <button @click="handleClick">close X</button>
                     <img :src="imageData.url" alt=""> 
                         <div id='image-info'>
-                            {{ heading }} {{imageData.username}} {{imageData.title}} 
+                             {{imageData.username}} {{imageData.title}} 
                             {{imageData.description}} 
-                           
+                           <!-- {{ heading }} -->
                             <input v-model='comment' placeholder="comment" type="text" name="comment">
                             <input v-model='username' placeholder="username" type="text" name="username">
                             <button @click='submitComment'>submit</button>
@@ -47,6 +51,8 @@
                                     <p> {{comment.username}}: '{{comment.comment}}' </p>
                                 </div>
                             </div>
+                            
+                            <!-- instead rendering ShowModal v-if=imageId and this.imade.id=null in component .js -->
 
                         </div>     
             </span>
