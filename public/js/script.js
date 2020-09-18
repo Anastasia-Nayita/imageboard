@@ -117,6 +117,7 @@
             description: "",
             username: "",
             file: null,
+            imageLink: "",
             // showModal: false,
         },
 
@@ -158,8 +159,14 @@
                 formData.append("title", this.title);
                 formData.append("description", this.description);
                 formData.append("username", this.username);
-                formData.append("file", this.file);
-                //console.log("!!!formData: ", formData);
+                if (!this.imageLink) {
+                    formData.append("file", this.file);
+                } else {
+                    formData.append("file", this.file);
+                    formData.append("imageLink", this.imageLink);
+                }
+
+                //console.log("!!!formData: ", formData);c
 
                 //console.log("this: ", this);
                 var thatImg = this;
@@ -175,12 +182,9 @@
                     });
             },
             handleChange: function (e) {
-                //console.log("handleChange is firering");
-                // console.log("file", e.target.files[0]);
                 this.file = e.target.files[0];
             },
             clickComponent: function (id) {
-                // this.showModal = true;
                 this.imageId = null;
 
                 console.log("clickedComponent is running");

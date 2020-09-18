@@ -5,6 +5,7 @@ CREATE TABLE images(
     url VARCHAR NOT NULL,
     username VARCHAR NOT NULL,
     title VARCHAR NOT NULL,
+    tags TEXT,
     description TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

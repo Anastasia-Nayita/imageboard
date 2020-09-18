@@ -66,10 +66,19 @@ app.get("/more/:lastId", (req, res) => {
 // });
 
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
-    const filename = req.file.filename;
-    const url = `${s3Url}${filename}`;
+    let url;
+
+    if (req.body.imageLink) {
+        url = req.body.imageLink;
+    } else {
+        const filename = req.file.filename;
+        url = `${s3Url}${filename}`;
+    }
+
+    console.log("req.body: ", req.body);
+    /////    cutUrl=newUrl.substring(url.lastIndexOf('/') + 1)   cut url part
+
     db.addImage(url, req.body.username, req.body.title, req.body.desc).then(
-        ///should it be in the if(req) ???
         ({ rows }) => {
             res.json({
                 image: rows[0],
@@ -84,9 +93,12 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
 app.get("/images/:id", (req, res) => {
     // console.log("something in the get imageId");
     //console.log("req.params: ", req.params);
-    db.getImageById(req.params.id).then(({ rows }) => {
+    db.getImageById(req.params.id).then((result) => {
+        /// console.log("result in image/id: ", result[0]);
+        let image = result[0];
+
         res.json({
-            image: rows[0],
+            image,
             success: true,
         });
     });
