@@ -8,7 +8,17 @@ module.exports.getImages = () => {
     return db.query(
         `SELECT * FROM images
         ORDER BY id DESC
-        LIMIT 10;`
+        LIMIT 6;`
+    );
+};
+
+exports.getMoreImages = (lastId) => {
+    return db.query(
+        `SELECT * FROM images
+        WHERE id < $1
+        ORDER BY id DESC
+        LIMIT 6`,
+        [lastId]
     );
 };
 
@@ -20,12 +30,15 @@ module.exports.addImage = (url, username, title, description) => {
         [url, username, title, description]
     );
 };
+
 module.exports.getImageById = (imageId) => {
-    return db.query(
-        `SELECT * FROM images  
+    return db
+        .query(
+            `SELECT * FROM images  
         WHERE id = ($1)`,
-        [imageId]
-    );
+            [imageId]
+        )
+        .then(({ rows }) => rows);
 };
 module.exports.addComment = (username, comment, image_id) => {
     return db.query(

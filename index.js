@@ -42,6 +42,29 @@ app.get("/images", (req, res) => {
         });
 });
 
+app.get("/more/:lastId", (req, res) => {
+    // db.getMoreImages(lastId)
+    // console.log("req.params.lastId: ", req.params.lastId);
+    db.getMoreImages(req.params.lastId)
+        .then((result) => {
+            console.log("result.rows in MORE: ", result.rows);
+            let images = result.rows;
+
+            res.json({
+                images,
+                success: true,
+            });
+        })
+        .catch((err) => {
+            console.log("err in getMore", err);
+        });
+});
+
+// app.post("/more", (req, res) => {
+//     // db.getMoreImages(lastId)
+//     console.log("SOMETHING IN THE POST MORE");
+// });
+
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     const filename = req.file.filename;
     const url = `${s3Url}${filename}`;

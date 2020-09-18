@@ -82,8 +82,6 @@
 
                 ///when we close set url to empty string '' location.hash something
                 ///thatImg.imageId = location.hash.slice(1);
-
-                ///  this.title = thatImg.title;  ?????
             },
 
             submitComment: function (e) {
@@ -124,14 +122,19 @@
 
         mounted: function () {
             var thatImg = this;
+
+            // console.log()
             axios
                 .get("/images")
                 .then(function (resp) {
-                    //console.log("resp.data: ", resp.data);
                     thatImg.images = resp.data.images;
+
                     // resp.data.images.unshift()
                     //console.log("resp.data: ", resp.data);
-                    //console.log("resp.data.images: ", resp.data.images);
+                    // console.log(
+                    //     "resp.data.images.id: ",
+                    //     resp.data.images[0].id
+                    // ); ////last id
                 })
                 .catch(function (err) {
                     console.log("err in get/images:", err);
@@ -163,12 +166,6 @@
                 axios
                     .post("/upload", formData)
                     .then(function (resp) {
-                        //console.log("resp in post/upload", resp);
-                        //  resp.data.images.unshift(formData) ???;
-                        ///push image in arr of data
-                        //console.log("thatImg: ", thatImg);
-                        //console.log("resp.data: ", resp.data);
-
                         thatImg.images.unshift(resp.data.image);
 
                         //console.log("thatImg.images: ", thatImg.images);
@@ -187,6 +184,32 @@
                 this.imageId = null;
 
                 console.log("clickedComponent is running");
+            },
+            clickMore: function (e) {
+                e.preventDefault();
+
+                var thatImg = this;
+                var lastId = thatImg.images[thatImg.images.length - 1].id;
+                console.log("WE ARE GETTING HERE");
+                //console.log("thatImg.images[0].id: ", thatImg.images[0].id);
+                axios
+                    .get("/more/" + lastId)
+                    .then(function (resp) {
+                        thatImg.images = thatImg.images.concat(
+                            resp.data.images
+                        );
+                        //var lastId = thatImg.images[0].id - 6;
+                        // resp.data.lastId = thatImg.images[0].id - 6;
+                        console.log("resp.data in MORE: ", resp.data); //// COME BACK TO SEE WHAT IS RESP HERE
+                    })
+                    .catch(function (err) {
+                        console.log("err in get More script", err);
+                    });
+
+                // var startId = this.images[0].id;
+                // var offset = 6;
+
+                // console.log("resp.data.images.id: ", resp.data.images[0].id); ////last id
             },
         },
     });

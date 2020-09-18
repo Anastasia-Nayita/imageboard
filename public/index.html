@@ -26,11 +26,21 @@
         </div>        
            </a>      
     </div>
-</div>      
+    
+</div> 
         <div v-else>nothing to show atm</div>
 
+    <div v-if=' images.length > 0 && images[images.length - 1].id == 1'>
+        <!-- <div class="visibility: hidden;"> -->
+            <!-- <button @click='clickMore' id="more" >MORE</button>  -->
+        <!-- </div> -->
+    </div>
+    
+    <div v-else>
+        <button @click='clickMore' id="more" >MORE</button> 
+    </div>
+
         <first-component :image-id='imageId' v-if="imageId"></first-component> 
-        
     </main> 
     
     <script id="first-component" type="text/x-template">

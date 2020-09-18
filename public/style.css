@@ -17,6 +17,11 @@
     max-height: 100%;
     /* border: grey solid; */
 /* }  */
+#more {
+    position: fixed;
+    bottom: 1%;
+    left: 50%;
+}
 #card {
     position: relative;
     border: grey solid;
