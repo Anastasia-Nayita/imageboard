@@ -43,11 +43,9 @@ app.get("/images", (req, res) => {
 });
 
 app.get("/more/:lastId", (req, res) => {
-    // db.getMoreImages(lastId)
-    // console.log("req.params.lastId: ", req.params.lastId);
     db.getMoreImages(req.params.lastId)
         .then((result) => {
-            console.log("result.rows in MORE: ", result.rows);
+            //console.log("result.rows in MORE: ", result.rows);
             let images = result.rows;
 
             res.json({
@@ -60,11 +58,6 @@ app.get("/more/:lastId", (req, res) => {
         });
 });
 
-// app.post("/more", (req, res) => {
-//     // db.getMoreImages(lastId)
-//     console.log("SOMETHING IN THE POST MORE");
-// });
-
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     let url;
 
@@ -75,16 +68,20 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
         url = `${s3Url}${filename}`;
     }
 
-    console.log("req.body: ", req.body);
+    // console.log("req.body: ", req.body);
     /////    cutUrl=newUrl.substring(url.lastIndexOf('/') + 1)   cut url part
 
-    db.addImage(url, req.body.username, req.body.title, req.body.desc).then(
-        ({ rows }) => {
-            res.json({
-                image: rows[0],
-            }); ///add catch for err and do success true/false
-        }
-    );
+    db.addImage(
+        url,
+        req.body.username,
+        req.body.title,
+        req.body.tags,
+        req.body.desc
+    ).then(({ rows }) => {
+        res.json({
+            image: rows[0],
+        }); ///add catch for err and do success true/false
+    });
 
     // console.log("file", req.file);
     // console.log("input", req.body);
@@ -94,7 +91,7 @@ app.get("/images/:id", (req, res) => {
     // console.log("something in the get imageId");
     //console.log("req.params: ", req.params);
     db.getImageById(req.params.id).then((result) => {
-        /// console.log("result in image/id: ", result[0]);
+        // console.log("result in image/id: ", result[0]);
         let image = result[0];
 
         res.json({

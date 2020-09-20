@@ -12,6 +12,8 @@
                 comment: "",
                 username: "",
                 comments: [],
+                next: "",
+                prev: "",
             };
         },
         mounted: function () {
@@ -24,7 +26,12 @@
             axios
                 .get("/images/" + this.imageId)
                 .then(function (resp) {
+                    //console.log("resp.data.image SCRIPT.JS", resp.data.image);
+                    thatImg.prev = resp.data.image.prev;
+                    thatImg.next = resp.data.image.next;
                     thatImg.imageData = resp.data.image;
+                    //console.log("thatImg.prev: ", thatImg.prev);
+                    //// here should be prev and next   and add it to watcher
 
                     //console.log("thatImg after adding data", thatImg);
                     // console.log("thatImg.title: ", thatImg.title);
@@ -50,12 +57,14 @@
             imageId: function () {
                 // console.log("something changed. IM WATCHING");
                 //same that in mounted think about how to make it clean and runs once
-                ///also check for jibra-jabra in url
+                ///also check for jibra-jabra in url                🔥🔥🔥  Come back here
 
                 var thatImg = this;
                 axios
                     .get("/images/" + this.imageId)
                     .then(function (resp) {
+                        thatImg.prev = resp.data.image.prev;
+                        thatImg.next = resp.data.image.next;
                         thatImg.imageData = resp.data.image;
                     })
                     .catch(function (err) {
@@ -114,6 +123,7 @@
             images: [],
             imageId: location.hash.slice(1),
             title: "",
+            tags: "",
             description: "",
             username: "",
             file: null,
@@ -129,9 +139,9 @@
                 .get("/images")
                 .then(function (resp) {
                     thatImg.images = resp.data.images;
-
+                    //console.log("resp.data.images: ", resp.data.images);
                     // resp.data.images.unshift()
-                    //console.log("resp.data: ", resp.data);
+
                     // console.log(
                     //     "resp.data.images.id: ",
                     //     resp.data.images[0].id
@@ -157,6 +167,7 @@
                 var formData = new FormData();
 
                 formData.append("title", this.title);
+                formData.append("tags", this.tags);
                 formData.append("description", this.description);
                 formData.append("username", this.username);
                 if (!this.imageLink) {

@@ -1,8 +1,20 @@
 * {
     box-sizing: border-box;
     margin: 0%;
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+        "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
+#top-thing {
+    background: url("https://scontent-ber1-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/p750x750/17076424_204453383372439_1919167657605595136_n.jpg?_nc_ht=scontent-ber1-1.cdninstagram.com&_nc_cat=103&_nc_ohc=CUxSurFLRwsAX8zcFCc&oh=3fe02dda39857e4a6fcc23887d8cd7ec&oe=5F918018")
+        no-repeat;
+    height: 84vh;
+    align-items: center;
+    display: flex;
+}
+#inputs {
+    margin: 5%;
+}
 #imageBlock {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -19,15 +31,16 @@
 /* }  */
 #more {
     position: fixed;
-    bottom: 1%;
+    bottom: 3%;
     left: 50%;
+    font-size: 3rem;
 }
 #card {
     position: relative;
-    border: grey solid;
     padding: 5%;
     height: 100%;
     justify-self: center;
+    filter: drop-shadow(0 0 0.75rem grey);
 }
 
 #cardImg {
@@ -44,10 +57,35 @@ span {
     z-index: 1;
     text-align: center;
 }
+#selectedImgBlock {
+    background-color: whitesmoke;
+    margin: 2% 20%;
+}
 
-span > img {
-    width: 50%;
+#selectedImg {
+    /* width: 50%; */
+    margin-top: 2%;
+    max-width: 28rem;
+}
+
+#next {
+    position: absolute;
+    left: 25%;
+}
+
+#prev {
+    position: absolute;
+    right: 25%;
+}
+
+#close {
+    position: fixed;
+    font-size: 3em;
+    right: 10%;
+
+    /* border-radius: 50%; */
+    background-color: #65696900;
 }
 #image-info {
-    background-color: cornsilk;
+    /* background-color: cornsilk; */
 }
