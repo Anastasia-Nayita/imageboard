@@ -39,7 +39,6 @@ module.exports.getImageById = (imageId) => {
                 WHERE id <($1)
                 ORDER BY id DESC
                 LIMIT 1) AS prev,
-
                 (SELECT id FROM images
                 WHERE id >($1)
                 ORDER BY id DESC

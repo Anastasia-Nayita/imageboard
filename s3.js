@@ -3,9 +3,9 @@ const fs = require("fs");
 
 let secrets;
 if (process.env.NODE_ENV == "production") {
-    secrets = process.env; // in prod the secrets are environment variables
+    secrets = process.env;
 } else {
-    secrets = require("./secrets"); // in dev they are in secrets.json which is listed in .gitignore
+    secrets = require("./secrets");
 }
 
 const s3 = new aws.S3({
@@ -15,18 +15,14 @@ const s3 = new aws.S3({
 
 exports.upload = (req, res, next) => {
     if (req.body.imageLink) {
-        // return res.sendStatus(500);
-        // console.log("req", req);
         console.log("req.body.link", req.body.imageLink);
-        // return;
         next();
     } else {
-        // if (req.url)
         const { filename, mimetype, size, path } = req.file;
         console.log("req.file ", req.file);
         const promise = s3
             .putObject({
-                Bucket: "touch-of-spice", ///name of the bucket
+                Bucket: "touch-of-spice",
                 ACL: "public-read",
                 Key: filename,
                 Body: fs.createReadStream(path),
