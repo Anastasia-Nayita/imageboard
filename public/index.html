@@ -1,100 +1,10 @@
 <!doctype html>
 <html>
 <head>
-    <title>Image|Board</title>
-       
-        <link rel="stylesheet" href="style.css">
-        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
+    <title></title>
 </head>
 <body>
-    <div id="top-thing">
-<h1 style="position: absolute; right: 5%;"> Russian winter melancholy </h1>
-
-<!-- <img src="" alt="frontpicture"> -->
-
- </div>
-    
-    <main>
-<form action="">
-    <div id="inputs">
-            <input v-model='title' type="text" name='title' placeholder='title'>
-            <input v-model='description' type="text" name='description' placeholder='description'>
-            <input v-model='username' type="text" name='username' placeholder='username'>
-            <!-- <input v-model='tags' type="text" name='tags' placeholder='tags'> -->
-            <input  type="text" v-model='imageLink' name="link" id="link" placeholder="https://example.com" pattern="https://.*">
-            <input @change='handleChange' type="file" name='file' accept='image/*'>
-            <!-- add token -->
-            <button @click='handleClick'>submit</button>
-    </div>        
-        </form>
-
-        <div id="imageBlock"v-if="images.length > 0"> 
-    <div id="card" v-for="image in images" > 
-        <a :href=" '#' + image.id">
-        <div>
-            <img id="cardImg" :src="image.url">
-                <p> {{image.title}} <a href="">{{image.tags}}</a> </p>   
-                <!--  we need to cut tags - breaking point is comma -->
-        </div>        
-           </a>      
-    </div>
-    
-</div> 
-        <div v-else>nothing to show atm</div>
-
-    <div v-if=' images.length > 0 && images[images.length - 1].id == 1'>
-        <!-- <div class="visibility: hidden;"> -->
-            <!-- <button @click='clickMore' id="more" >MORE</button>  -->
-        <!-- </div> -->
-    </div>
-    
-    <div v-else>
-        <div @click='clickMore' id="more" > ⟱ </div> 
-    </div>
-
-        <first-component :image-id='imageId' v-if="imageId"></first-component> 
-    </main> 
-    
-    <script id="first-component" type="text/x-template">
-        <div>
-            <span>
-                <div id="selectedImgBlock">
-                    <div  id='close' @click="handleClick"> × </div>
-                  
-                        <img :src="imageData.url" alt="gallery image" id="selectedImg"> 
-                      <div v-if='next==null'></div>
-                   <div v-else>  <button id='next'> <a :href=" '#' + next"> ◀︎ </a> </button> </div>
-                     <div v-if='prev==null'></div>
-                   <div v-else>  <button id='prev'> <a :href=" '#' + prev"> ▶︎ </a> </button> </div>
-                   
-                         <div id='image-info' style="margin: 3%;">
-                                {{imageData.username}} {{imageData.title}} 
-                                {{imageData.description}} 
-                            <!-- {{ heading }} --> 
-                            </div> 
-                            <div style="margin: 3%;">
-                                <input v-model='comment' placeholder="comment" type="text" name="comment">
-                                <input v-model='username' placeholder="username" type="text" name="username">
-                                <button @click='submitComment'>submit</button>
-                            </div>
-                                <div id="comBlock"v-if="comments.length > 0"> 
-                                    <div id="comCard" v-for="comment in comments">  
-                                        <p> {{comment.username}}: {{comment.comment}} {{comment.created_at}} </p>
-                                    </div>
-                                </div>
-                                
-                                <!-- instead rendering ShowModal v-if=imageId and this.imade.id=null in component .js -->
-
-                              
-                </div>
-            </span>
-       </div>        
-    </script>
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>
-    <script src="/js/script.js"></script>
 </body>
 </html>
